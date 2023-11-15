@@ -84,7 +84,7 @@ else:
 # Launch an EC2 instance
 instances = ec2_resource.create_instances(
     ImageId=latest_ubuntu_ami,
-    InstanceType='t2.micro',
+    InstanceType='m4.large',
     MaxCount=1,
     MinCount=1,
     KeyName='MyKeyPair',
