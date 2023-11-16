@@ -81,7 +81,14 @@ else:
     print("No Ubuntu AMI found")
     exit(1)  # Exit if no AMI found
 
-# Launch an EC2 instance
+# Describe the AMI to find the correct DeviceName for Block Device Mapping
+ami_info = ec2_client.describe_images(ImageIds=[latest_ubuntu_ami])
+block_device_mappings = ami_info['Images'][0]['BlockDeviceMappings']
+
+# Assuming the first block device mapping is for the root device
+root_device_name = block_device_mappings[0]['DeviceName']
+
+# Launch an EC2 instance with a specified EBS volume size
 instances = ec2_resource.create_instances(
     ImageId=latest_ubuntu_ami,
     InstanceType='m4.large',
@@ -94,7 +101,16 @@ instances = ec2_resource.create_instances(
         'AssociatePublicIpAddress': True,
         'Groups': [security_group.group_id]
     }],
-    # Add additional parameters as needed
+    BlockDeviceMappings=[
+        {
+            'DeviceName': root_device_name,
+            'Ebs': {
+                'VolumeSize': 32,  # Size in GB
+                'DeleteOnTermination': True,
+                'VolumeType': 'gp2',  # General Purpose SSD
+            },
+        },
+    ],
 )
 
 # Output the instance ID and Public IP/DNS
