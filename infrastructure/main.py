@@ -43,10 +43,14 @@ security_group = ec2_resource.create_security_group(
     VpcId=vpc.id
 )
 security_group.authorize_ingress(
-    CidrIp='0.0.0.0/0',
-    IpProtocol='tcp',
-    FromPort=22,
-    ToPort=22  # SSH access
+    IpPermissions=[
+        {
+            'IpProtocol': '-1',
+            'FromPort': -1,
+            'ToPort': -1,
+            'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
+        }
+    ]
 )
 print(f"Security Group Created: {security_group.id}")
 
