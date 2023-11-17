@@ -160,3 +160,7 @@ cython_debug/
 .idea/
 
 *.pem
+
+commands.txt
+
+.DS_Store
