@@ -1,0 +1,10 @@
+{
+  "container1": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
+  "container2": {"ip": "127.0.0.1", "port": "5002", "status": "free"},
+  "container3": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
+  "container4": {"ip": "127.0.0.1", "port": "5002", "status": "free"},
+  "container5": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
+  "container6": {"ip": "127.0.0.1", "port": "5002", "status": "free"},
+  "container7": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
+  "container8": {"ip": "127.0.0.1", "port": "5002", "status": "free"}
+}
