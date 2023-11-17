@@ -1,9 +1,12 @@
 import boto3
 import os
+import json
+import base64
 
 # Initialize Boto3 EC2 resource and client
 ec2_resource = boto3.resource('ec2')
 ec2_client = boto3.client('ec2')
+iam = boto3.client('iam')
 
 # Create a VPC
 vpc = ec2_resource.create_vpc(CidrBlock='10.0.0.0/16')
@@ -92,13 +95,27 @@ block_device_mappings = ami_info['Images'][0]['BlockDeviceMappings']
 # Assuming the first block device mapping is for the root device
 root_device_name = block_device_mappings[0]['DeviceName']
 
+# User data script to ensure SSM Agent is installed and running (in order to use .send_command on ubuntu instances)
+user_data_script = """#!/bin/bash
+sudo snap install amazon-ssm-agent --classic
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
+"""
+# Encode user data script
+user_data_encoded = base64.b64encode(user_data_script.encode()).decode()
+
+# Fetch the ARN of the existing IAM role
+role_arn = iam.get_role(RoleName='LabRole')['Role']['Arn']
+
 # Launch an EC2 instance with a specified EBS volume size
 instances = ec2_resource.create_instances(
     ImageId=latest_ubuntu_ami,
     InstanceType='m4.large',
-    MaxCount=1,
+    MaxCount=5,
     MinCount=1,
     KeyName='MyKeyPair',
+    UserData=user_data_encoded,
+    IamInstanceProfile={'Arn': 'arn:aws:iam::308167270751:instance-profile/LabInstanceProfile'},
     NetworkInterfaces=[{
         'SubnetId': subnet.id,
         'DeviceIndex': 0,
@@ -117,10 +134,34 @@ instances = ec2_resource.create_instances(
     ],
 )
 
-# Output the instance ID and Public IP/DNS
-instance = instances[0]
-instance.wait_until_running()
-instance.load()
-print(f"Instance Created: {instance.id}")
-print(f"Instance Public DNS: {instance.public_dns_name}")
-print(f"Instance Public IP: {instance.public_ip_address}")
+instance_data = []
+
+# Wait for instances to run, assign names, and collect their details
+for i, instance in enumerate(instances, start=1):
+    instance.wait_until_running()
+    instance.load()
+
+    if i <= 4:
+        instance_name = f'worker{i}'
+    else:
+        instance_name = 'orchestrator'
+
+    instance.create_tags(Tags=[{'Key': 'Name', 'Value': instance_name}])
+
+    instance_info = {
+        'Name': instance_name,
+        'InstanceID': instance.id,
+        'PublicDNS': instance.public_dns_name,
+        'PublicIP': instance.public_ip_address
+    }
+    instance_data.append(instance_info)
+
+    print(f"Instance {i} Created: {instance.id}")
+    print(f"Instance {i} Public DNS: {instance.public_dns_name}")
+    print(f"Instance {i} Public IP: {instance.public_ip_address}")
+
+# Write the instance data to a JSON file
+with open('instance_details.json', 'w') as file:
+    json.dump(instance_data, file, indent=4)
+
+print("Instance details saved to instance_details.json")

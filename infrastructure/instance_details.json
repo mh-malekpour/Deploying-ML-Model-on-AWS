@@ -1,0 +1,32 @@
+[
+    {
+        "Name": "worker1",
+        "InstanceID": "i-00b6bcc53a9aea81c",
+        "PublicDNS": "ec2-54-167-171-208.compute-1.amazonaws.com",
+        "PublicIP": "54.167.171.208"
+    },
+    {
+        "Name": "worker2",
+        "InstanceID": "i-05bdd33fa76c7f036",
+        "PublicDNS": "ec2-34-239-207-212.compute-1.amazonaws.com",
+        "PublicIP": "34.239.207.212"
+    },
+    {
+        "Name": "worker3",
+        "InstanceID": "i-0e561b50f2b03ca78",
+        "PublicDNS": "ec2-54-84-24-167.compute-1.amazonaws.com",
+        "PublicIP": "54.84.24.167"
+    },
+    {
+        "Name": "worker4",
+        "InstanceID": "i-0e40e56fc221ad986",
+        "PublicDNS": "ec2-18-234-107-213.compute-1.amazonaws.com",
+        "PublicIP": "18.234.107.213"
+    },
+    {
+        "Name": "orchestrator",
+        "InstanceID": "i-0a1972d96fffb5fe1",
+        "PublicDNS": "ec2-52-86-134-90.compute-1.amazonaws.com",
+        "PublicIP": "52.86.134.90"
+    }
+]
