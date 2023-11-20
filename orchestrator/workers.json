@@ -1,10 +1,1 @@
-{
-  "container1": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
-  "container2": {"ip": "127.0.0.1", "port": "5002", "status": "free"},
-  "container3": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
-  "container4": {"ip": "127.0.0.1", "port": "5002", "status": "free"},
-  "container5": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
-  "container6": {"ip": "127.0.0.1", "port": "5002", "status": "free"},
-  "container7": {"ip": "127.0.0.1", "port": "5001", "status": "free"},
-  "container8": {"ip": "127.0.0.1", "port": "5002", "status": "free"}
-}
+{"container1": {"ip": "ec2-44-192-80-88.compute-1.amazonaws.com", "port": "5001", "status": "free"}, "container2": {"ip": "ec2-3-237-20-137.compute-1.amazonaws.com", "port": "5002", "status": "free"}, "container3": {"ip": "ec2-35-170-73-127.compute-1.amazonaws.com", "port": "5001", "status": "free"}, "container4": {"ip": "ec2-44-192-247-200.compute-1.amazonaws.com", "port": "5002", "status": "free"}, "container5": {"ip": "ec2-44-192-80-88.compute-1.amazonaws.com", "port": "5001", "status": "free"}, "container6": {"ip": "ec2-3-237-20-137.compute-1.amazonaws.com", "port": "5002", "status": "free"}, "container7": {"ip": "ec2-35-170-73-127.compute-1.amazonaws.com", "port": "5001", "status": "free"}, "container8": {"ip": "ec2-44-192-247-200.compute-1.amazonaws.com", "port": "5002", "status": "free"}}
