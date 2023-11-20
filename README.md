@@ -1,83 +1,73 @@
-# Deploying ML Model on AWS
+# Deploying ML-Based Web Applications on AWS
 
-### Overview
+## 1. Introduction
 
-This guide outlines the steps for setting up and running the AWS ML Serving project. The project is structured into several folders, each with specific roles:
+In the dynamic realm of cloud technologies, orchestrating web applications within containerized environments is a common practice for software systems, including ML-based deployments. This lab assignment offers hands-on exploration of deploying ML-based web applications using an orchestrator/worker architecture on the AWS cloud platform.
 
-1. **Infrastructure Folder**: Contains scripts for setting up the AWS infrastructure, including worker and orchestrator instances, and deploying applications on them.
-2. **Worker Folder**: Includes a Flask app and Dockerfile to set up two containers (serving ML models on ports 5001 and 5002) on the worker instances.
-3. **Orchestrator Folder**: Contains a Flask app and Dockerfile to handle client requests and distribute them across worker instances, running on the orchestrator instance.
-4. **Client Folder**: Includes a Python module that can be run on a local PC to send requests to the orchestrator.
+## 2. Background
 
-### Step-by-Step Instructions
+### Containerization
+Containerization, facilitated by technologies such as Docker, allows developers to encapsulate their applications with all necessary dependencies into portable containers. This ensures consistent application performance across different computing environments.
 
-### 1. Setting Up AWS Infrastructure
+### Containers Orchestration
+As applications scale, orchestration becomes essential. It involves managing multiple containers, ensuring scalability, and automating deployment. Tools like Docker-compose and Kubernetes are commonly used for orchestration.
 
-To set up the AWS infrastructure and create 5 EC2 instances (4 workers and 1 orchestrator), follow these steps:
+### Main/Worker Architectural Style
+In this style, a central entity (main) manages multiple independent virtual computing instances (workers). This design efficiently parallelizes computing scenarios. The main entity distributes tasks, coordinates, and controls, while workers execute tasks independently.
 
-a. Place your AWS credentials into the appropriate file:
+## 3. Methodology
+![Architecture Diagram](https://i.ibb.co/9pTqRZr/Screenshot-2023-11-20-at-5-54-52-PM.png)
+The goal of this lab is to automate the deployment of an ML model using a containerized approach, following the main/worker architectural style. The deployment architecture is shown below. Steps include:
 
-```
-~/.aws/credentials
-```
+### 1. Develop Docker Files
+Create Docker files for both worker and orchestrator. For workers, include a `docker-compose.yaml` file to handle multiple containers on the same instance. These files are available on our GitHub repository.
 
-b. Clone the repository and navigate to the infrastructure directory:
+### 2. Setup Workers
+Launch four EC2 instances with m4.large specifications and 32 GB storage. Install Docker and Docker Compose, clone the worker source code, build Docker images, and execute containers. Test the setup at "worker_IP:port1/run_model" and "worker_IP:port2/run_model".
 
-```
-git clone git@github.com:mh-malekpour/Deploying-ML-Model-on-AWS.git
-cd Deploying-ML-Model-on-AWS/infrastructure
-```
+### 3. Setup Orchestrator
+Complete the orchestrator code to forward requests to workers. Deploy a single EC2 instance (m4.large, 16GB storage), install Docker, clone source code, build the Docker image, and run it.
 
-c. Set up a virtual environment and activate it:
+## 4. Reproduction Steps
 
-```
-python -m virtualenv venv
-source venv/bin/activate
-```
+### Setting Up AWS Infrastructure
+1. Add AWS credentials to `~/.aws/credentials`.
+2. Clone the repository and navigate to the infrastructure directory:
+   ```
+   git clone git@github.com:mh-malekpour/Deploying-ML-Model-on-AWS.git
+   cd Deploying-ML-Model-on-AWS/infrastructure
+   ```
+3. Set up and activate a virtual environment:
+   ```
+   python -m virtualenv venv
+   source venv/bin/activate
+   ```
+4. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+5. Execute the main script to set up the infrastructure:
+   ```
+   python main.py
+   ```
 
-d. Install required dependencies:
+### Setting Up Workers
+Execute `python workers.py` to set up workers.
 
-```
-pip install -r requirements.txt
-```
+### Setting Up the Orchestrator
+Execute `python orchestrator.py` to set up the orchestrator.
 
-e. Execute the main script to set up the infrastructure:
+### Sending Requests
+To send requests to the orchestrator:
+1. Navigate to the client directory:
+   ```
+   cd Deploying-ML-Model-on-AWS/client
+   ```
+2. Execute the client script:
+   ```
+   python main.py
+   ```
 
-```
-python main.py
-```
+## Conclusion
 
-### 2. Setting Up Workers
-
-To pull codes, install required packages on workers, and deploy the Flask app for serving the ML model using Docker Compose:
-
-```
-python workers.py
-```
-
-### 3. Setting Up the Orchestrator
-
-To set up the orchestrator for deploying the Flask app, which manages and distributes requests among workers:
-
-```
-python orchestrator.py
-```
-
-### 4. Sending Requests to the Orchestrator
-
-To send requests from your local PC to the orchestrator:
-
-a. Navigate to the client directory:
-
-```
-cd Deploying-ML-Model-on-AWS/client
-```
-
-b. Execute the client script:
-
-```
-python main.py
-```
-
----
-**Note**: Ensure you have the necessary permissions and the latest version of Python installed on your system before proceeding with the setup.
+This project demonstrates the automated deployment of ML-based web Flask applications in a containerized manner, following the main/worker architectural style.
