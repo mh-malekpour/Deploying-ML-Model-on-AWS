@@ -4,8 +4,8 @@ docker-compose up --build
 
 curl http://localhost:5001/run_model
 curl http://localhost:5002/run_model
-curl http://ec2-44-200-29-86.compute-1.amazonaws.com:5001/run_model
-curl http://ec2-54-167-171-208.compute-1.amazonaws.com:5001/run_model
+
+curl http://ec2-44-192-80-88.compute-1.amazonaws.com:5001/run_model
 
 
 git clone https://github.com/mh-malekpour/Deploying-ML-Model-on-AWS.git

@@ -26,7 +26,7 @@
     {
         "Name": "orchestrator",
         "InstanceID": "i-05a0a53039aa2ed0a",
-        "PublicDNS": "/",
+        "PublicDNS": "ec2-44-197-199-40.compute-1.amazonaws.com",
         "PublicIP": "44.197.199.40"
     }
 ]
