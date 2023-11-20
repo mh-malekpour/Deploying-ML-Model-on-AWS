@@ -165,3 +165,21 @@ with open('instance_details.json', 'w') as file:
     json.dump(instance_data, file, indent=4)
 
 print("Instance details saved to instance_details.json")
+
+def load_json(filename):
+    with open(filename, 'r') as file:
+        return json.load(file)
+def save_json(data, filename):
+    with open(filename, 'w') as file:
+        json.dump(data, file, indent=4)
+
+instance_details_data = load_json('instance_details.json')
+workers_data = load_json('../orchestrator/workers.json')
+
+for i, worker in enumerate(workers_data):
+    dns = instance_details_data[i%4]['PublicDNS']
+    container_i = f"container{i+1}"
+    workers_data[container_i]['ip'] = dns
+# Save the updated data back to workers.json
+save_json(workers_data, '../orchestrator/workers.json')
+print("Workers json file has been updated with infra PublicDNSs.")
