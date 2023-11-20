@@ -1,4 +1,4 @@
-# Project Setup Guide: AWS ML Serving
+# Deploying ML Model on AWS
 
 ### Overview
 
