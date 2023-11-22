@@ -1,8 +1,8 @@
-# Deploying ML-Based Web Applications on AWS
+# Serving ML-Based Web Applications on AWS
 
 ## 1. Introduction
 
-In the dynamic realm of cloud technologies, orchestrating web applications within containerized environments is a common practice for software systems, including ML-based deployments. This lab assignment offers hands-on exploration of deploying ML-based web applications using an orchestrator/worker architecture on the AWS cloud platform.
+In the dynamic realm of cloud technologies, orchestrating web applications within containerized environments is a common practice for software systems, including ML-based deployments. This project offers hands-on exploration of deploying ML-based web applications using an orchestrator/worker architecture on the AWS cloud platform.
 
 ## 2. Background
 
@@ -17,7 +17,7 @@ In this style, a central entity (main) manages multiple independent virtual comp
 
 ## 3. Methodology
 ![Architecture Diagram](https://i.ibb.co/9pTqRZr/Screenshot-2023-11-20-at-5-54-52-PM.png)
-The goal of this lab is to automate the deployment of an ML model using a containerized approach, following the main/worker architectural style. The deployment architecture is shown below. Steps include:
+The goal of this project is to automate the deployment of an ML model using a containerized approach, following the main/worker architectural style. The deployment architecture is shown below. Steps include:
 
 ### 1. Develop Docker Files
 Create Docker files for both worker and orchestrator. For workers, include a `docker-compose.yaml` file to handle multiple containers on the same instance. These files are available on our GitHub repository.
