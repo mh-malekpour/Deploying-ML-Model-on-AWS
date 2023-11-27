@@ -1,4 +1,4 @@
-# Serving ML-Based Web Applications on AWS
+# Serving ML-Based Web Application on AWS
 
 ## 1. Introduction
 
